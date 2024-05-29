@@ -1,3 +1,4 @@
+'use client';
 import * as XLSX from 'xlsx/xlsx.mjs';
 import * as xml2js from "xml2js"; // Import xml2js library
 import exceljs from 'exceljs';

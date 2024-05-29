@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { InboxOutlined } from '@ant-design/icons';
 import { message, Upload as AntUpload, Modal } from 'antd';

@@ -1,3 +1,4 @@
+'use client';
 import {Sidebar}  from "./_component/Sidebar/Sidebar";
 import { Navbar } from "./_component/Navbar/Navbar";
 

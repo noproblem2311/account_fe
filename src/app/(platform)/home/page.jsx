@@ -7,6 +7,9 @@ import { HandleListFile } from "../_component/HandleFile/HandleListFile"
 import { useEffect, useState } from "react"
 import axios from 'axios';
 import { Button, Radio } from "antd"
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { PutObjectToS3 } from "../_component/Upload/UploadFileToS3"
 const Home = () => {
     const [isCheck, setIsCheck] = useState(false)
@@ -101,15 +104,48 @@ const Home = () => {
         handleFileList();
 
     }, [fileList]);
+    function clear_list_file_after_check(list_file_after_check) {
+        const updatedData = { ...list_file_after_check };
+    
+        // Iterate over each process
+        for (const process in processConditions) {
+            const conditions = processConditions[process];
+            const dataForProcess = updatedData[process];
+            
+            // Check if all required types are present in the dataForProcess
+            let allTypesPresent = true;
+            for (const key in conditions) {
+                const condition = conditions[key];
+                const typeExists = dataForProcess && dataForProcess.some(item => condition(item.type));
+                if (!typeExists) {
+                    allTypesPresent = false;
+                    break;
+                }
+            }
+            
+            // If not all types are present, remove the process from updatedData
+            if (!allTypesPresent) {
+                delete updatedData[process];
+            }
+        }
+        console.log("================================================",updatedData);
+        return updatedData;
+    }
     async function onHandleProcess() {
 
         const status = await PutObjectToS3(fileList);
         if (status) {
             try {
-                const res = await axios.post('http://13.214.156.123/main_process/', list_file_after_check);
-                const data = res.data;
+                const after_clear = clear_list_file_after_check(list_file_after_check);
+                const res = await axios.post('http://13.214.156.123/main_process/', after_clear);
+                if (res.status === 200) {
+                    toast.success("Xử lí thành công");
+                } else {
+                    toast.error("Có lỗi xảy ra khi xử lí dữ liệu");
+                }
             } catch (error) {
                 console.error(error);
+                toast.error("Có lỗi xảy ra khi xử lí dữ liệu");
             }
         }
     }

@@ -12,12 +12,10 @@ const History = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchDatasource = async () => {
-    console.log('fetchDatasource called');
     setIsLoading(true);
     try {
       const response = await axios.get('http://13.214.156.123/history-by-user/3537f1c1-8aa9-4a66-90de-6a59ea16bc75/');
       const data = response.data;
-      console.log("check",data);
       setDatasource(data);
     } catch (error) {
       console.error('Error fetching data:', error);

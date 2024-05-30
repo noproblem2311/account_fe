@@ -54,7 +54,6 @@ export   const  HandleListFile = async (userid, listfile) => {
   }
 
   async function check_text_include_in_file(file, text) {
-    console.log(file.name);
 
     // Read file content based on extension (assuming UTF-8 encoding):
     let is_text_found = {"status":false,"type":"","file":""};

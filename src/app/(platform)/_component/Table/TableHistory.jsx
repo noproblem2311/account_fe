@@ -35,7 +35,6 @@ const key_map = {
 }
 const TableHistory = ({ datas = [] }) => {
   const datatable = [];
-  console.log("here",datas);
   for (const key in datas) {
     const dataonbj = datas[key];
 

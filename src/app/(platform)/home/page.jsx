@@ -6,9 +6,9 @@ import Upload from "@/app/(platform)/_component/Upload/Upload"
 import { HandleListFile } from "../_component/HandleFile/HandleListFile"
 import { useEffect, useState } from "react"
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
+
 import { Button, Radio } from "antd"
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import { PutObjectToS3 } from "../_component/Upload/UploadFileToS3"
 const Home = () => {
@@ -139,6 +139,7 @@ const Home = () => {
                 const after_clear = clear_list_file_after_check(list_file_after_check);
                 const res = await axios.post('http://13.214.156.123/main_process/', after_clear);
                 if (res.status === 200) {
+                    console.log("xu li tthan cong ")
                     toast.success("Xử lí thành công");
                 } else {
                     toast.error("Có lỗi xảy ra khi xử lí dữ liệu");
@@ -190,7 +191,7 @@ const Home = () => {
                         </div>
                         <div className="flex items-center">
                             <Radio checked={status.process_2.TT}></Radio>
-                            <span>Báo cáo tài chính(BCTC)</span>
+                            <span>DANH SÁCH THÔNG TƯ(TT)</span>
                         </div>
                     </div>
     

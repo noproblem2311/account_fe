@@ -58,7 +58,19 @@ const columns = [
           </div>
         );
       }
-      else if (typeof info[0] == "string") {
+      else if (typeof info[0] == "string"  ) {
+        const len = info.length;
+        if (len>1) {
+          return (
+            <div>
+              {info.map((item, index) => (
+                <div key={index} style={{ marginBottom: '10px', border: '1px solid #ccc', padding: '10px' }}>
+                  <p><strong>{item}</strong></p>
+                </div>
+              ))}
+            </div>
+          );
+        }
         return <p>{info}</p>;
       }
        else {

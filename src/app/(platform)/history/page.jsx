@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import closeicon from '@/assets/icon/close.svg';
 import axios from 'axios';
 import noticicon from '@/assets/icon/notice.svg';
-import Upload from "@/app/(platform)/_component/Upload/Upload";
+import CustomUpload from "@/app/(platform)/_component/Upload/Upload";
 import TableHistory from '@/app/(platform)/_component/Table/TableHistory';
 
 const History = () => {
@@ -39,7 +39,7 @@ const History = () => {
 
       <div className="flex flex-col gap-y-[15px] ">
         <h3 className="font-bold leading-8 text-[23px]">Lịch sử gần đây</h3>
-        <div className=" flex flex-col min-h-[785px] bg-white px-4 py-5">
+        <div className=" flex flex-col min-h-[875px] bg-white px-4 py-5">
           <TableHistory datas={datasource}></TableHistory>
         </div>
       </div>

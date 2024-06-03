@@ -85,13 +85,20 @@ export const HandleListFile = async (userid, listfile) => {
           for (const ref in worksheet) {
             if (ref !== '!ref') {
               const cell = worksheet[ref];
-              if (cell && cell.v) {
-                const regex = new RegExp(text, 'i');
-                if (regex.test(cell.v.toString())) {
-                  is_text_found["status"] = true;
-                  is_text_found["type"] = "xlsx";
-                  is_text_found["file"] = template[text];
-                  break;
+              // Lấy số hàng và cột từ tham chiếu ô (ref)
+              const col = ref.replace(/[0-9]/g, ''); // Lấy cột
+              const row = parseInt(ref.replace(/[A-Z]/g, ''), 10); // Lấy hàng
+    
+              // Kiểm tra nếu cột và hàng nhỏ hơn 7
+              if (col.charCodeAt(0) - 64 < 7 && row < 7) { // 'A' -> 1, 'B' -> 2, ...
+                if (cell && cell.v) {
+                  const regex = new RegExp(text, 'i');
+                  if (regex.test(cell.v.toString())) {
+                    is_text_found["status"] = true;
+                    is_text_found["type"] = "xlsx";
+                    is_text_found["file"] = template[text];
+                    break;
+                  }
                 }
               }
             }
@@ -100,6 +107,7 @@ export const HandleListFile = async (userid, listfile) => {
         }
       }
     }
+    
 
     if (file.name.endsWith(".xml")) {
       const fileContent = await file.text();

@@ -38,12 +38,14 @@ const columns = [
         console.log("text",text);
 
         info = JSON.parse(text);
+        console.log("info",info);
       } catch (e) {
         console.error("Invalid JSON string:", e);
         return <p>{text}</p>;
       }
   
-      if (Array.isArray(info)) {
+      if (Array.isArray(info) && typeof info[0] != "string") {
+
         return (
           <div>
             {info.map((item, index) => (
@@ -55,7 +57,11 @@ const columns = [
             ))}
           </div>
         );
-      } else {
+      }
+      else if (typeof info[0] == "string") {
+        return <p>{info}</p>;
+      }
+       else {
         return <p>Invalid JSON format</p>;
       }
     }

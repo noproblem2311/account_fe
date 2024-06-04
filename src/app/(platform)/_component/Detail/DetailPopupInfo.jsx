@@ -12,7 +12,6 @@ export const DetailPopupdata = ({ data, isShow, onClose }) => {
             data = data.replace(/True/g, 'true');
             data = data.replace(/None/g, 'null');
             data = JSON.parse(data);
-            console.log(data);
         } catch (e) {
         console.error("Invalid JSON string:", e);
         }

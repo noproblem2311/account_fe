@@ -52,16 +52,7 @@ const TableHistory = ({ datas = [] }) => {
   const [showDetail, setShowDetail] = useState(false);
 
   const handleViewDetails = (information) => {
-    let info;
-    try {
-      information = information.replace(/'/g, '"');
-      information = information.replace(/^"/, "").replace(/"$/, "");
-      info = JSON.parse(information);
-    } catch (e) {
-      console.error("Invalid JSON string:", e);
-      info = information;
-    }
-    setDetailData(info);
+    setDetailData(information);
     setShowDetail(true);
   };
 

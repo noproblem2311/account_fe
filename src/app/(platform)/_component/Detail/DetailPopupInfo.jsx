@@ -3,8 +3,25 @@
 import { useEffect, useState } from "react";
 
 export const DetailPopupdata = ({ data, isShow, onClose }) => {
+    if (data != null && typeof data == "string"){
+        console.log("check");
+    
+        try {
+            data = data.replace(/'/g, '"');
+            data = data.replace(/^"/, "").replace(/"$/, "");
+            // change False to false
+            data = data.replace(/False/g, 'false');
+            // change True to true
+            data = data.replace(/True/g, 'true');
+            // change None to null
+            data = data.replace(/None/g, 'null');
+            data = JSON.parse(data);
+        } catch (e) {
+        console.error("Invalid JSON string:", e);
+        }
+    }
+       
     const [show, setShow] = useState(false);
-
     useEffect(() => {
         setShow(isShow);
     }, [isShow]);

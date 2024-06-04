@@ -1,15 +1,17 @@
 'use client';
-import React from 'react';
-import { Table } from 'antd';
 
-const columns = [
+import React, { useState } from 'react';
+import { Table } from 'antd';
+import {DetailPopupdata} from '@/app/(platform)/_component/Detail/DetailPopupInfo';
+
+const columns = (onViewDetails) => [
   {
     title: 'Thời gian đối chiếu',
     dataIndex: 'timePeriod',
     key: 'timePeriod',
   },
   {
-    title: 'process',
+    title: 'Process',
     dataIndex: 'process',
     key: 'process',
   },
@@ -18,68 +20,21 @@ const columns = [
     dataIndex: 'documentType',
     key: 'documentType',
     render: (text) => <span dangerouslySetInnerHTML={{__html: text.join('<br>')}} />,
-
   },
   {
     title: 'Trạng thái',
     dataIndex: 'status',
     key: 'status',
-    render: (text) => <span className={`status-${text.toLowerCase()}`}>{text}</span>,
+    render: (text) => <span className={`status-${text.toLowerCase()}`}>{text == "pass"? "không chênh lệch": <span className="text-red-500">chênh lệch</span>}</span>,
   },
   {
     title: 'Thông tin',
     dataIndex: 'information',
     key: 'information',
-    render: (text) => {
-      let info;
-      try {
-        text = text.replace(/'/g, '"');
-        text = text.replace(/^"/, "").replace(/"$/, "");
-        console.log("text",text);
-
-        info = JSON.parse(text);
-        console.log("info",info);
-      } catch (e) {
-        console.error("Invalid JSON string:", e);
-        return <p>{text}</p>;
-      }
-  
-      if (Array.isArray(info) && typeof info[0] != "string") {
-
-        return (
-          <div>
-            {info.map((item, index) => (
-              <div key={index} style={{ marginBottom: '10px', border: '1px solid #ccc', padding: '10px' }}>
-                {Object.keys(item).map((key, idx) => (
-                  <p key={idx}><strong>{key}:</strong> {item[key]}</p>
-                ))}
-              </div>
-            ))}
-          </div>
-        );
-      }
-      else if (typeof info[0] == "string"  ) {
-        const len = info.length;
-        if (len>1) {
-          return (
-            <div>
-              {info.map((item, index) => (
-                <div key={index} style={{ marginBottom: '10px', border: '1px solid #ccc', padding: '10px' }}>
-                  <p><strong>{item}</strong></p>
-                </div>
-              ))}
-            </div>
-          );
-        }
-        return <p>{info}</p>;
-      }
-       else {
-        return <p>Invalid JSON format</p>;
-      }
-    }
-    
-    
-    
+    render: (text, record) => (
+      record.status =="pass" ? <span>Số liệu trùng khớp</span> :
+      <button onClick={() => onViewDetails(record.information)}><span className="text-blue-500">  Xem chi tiết </span></button>
+    ),
   },
 ];
 
@@ -93,23 +48,44 @@ const key_map = {
 }
 
 const TableHistory = ({ datas = [] }) => {
-  const datatable = [];
-  for (const key in datas) {
-    const dataonbj = datas[key];
+  const [detailData, setDetailData] = useState(null);
+  const [showDetail, setShowDetail] = useState(false);
 
-    const preobj = {
-      key: key,
-      timePeriod: dataonbj['created_at'],
-      status: dataonbj['status'],
-      process: dataonbj['process'],
-      documentType: key_map[dataonbj['process']],
-      information: JSON.stringify(dataonbj['description']),
-    };
+  const handleViewDetails = (information) => {
+    let info;
+    try {
+      information = information.replace(/'/g, '"');
+      information = information.replace(/^"/, "").replace(/"$/, "");
+      info = JSON.parse(information);
+    } catch (e) {
+      console.error("Invalid JSON string:", e);
+      info = information;
+    }
+    setDetailData(info);
+    setShowDetail(true);
+  };
 
-    datatable.push(preobj);
-  }
+  const handleCloseDetails = () => {
+    setShowDetail(false);
+    setDetailData(null);
+  };
 
-  return <Table columns={columns} dataSource={datatable} />;
+  const datatable = datas.map((dataonbj, key) => ({
+    key,
+    timePeriod: dataonbj['created_at'],
+    status: dataonbj['status'],
+    process: dataonbj['process'],
+    documentType: key_map[dataonbj['process']],
+    information: JSON.stringify(dataonbj['description']),
+  }));
+
+  return (
+    <>
+      <Table columns={columns(handleViewDetails)} dataSource={datatable} />
+      
+      <DetailPopupdata data={detailData} isShow={showDetail} onClose={handleCloseDetails} />
+    </>
+  );
 };
 
 export default TableHistory;

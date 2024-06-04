@@ -114,7 +114,6 @@ const Home = () => {
             }
         }
         
-        console.log(newStatus);
         setStatus(newStatus);
     }
     const checkForDuplicates = (fileList) => {
@@ -185,7 +184,6 @@ const Home = () => {
                 const after_clear = clear_list_file_after_check(list_file_after_check);
                 const res = await axios.post('http://13.214.156.123/main_process/', after_clear);
                 if (res.status === 200) {
-                    console.log("Xử lí thành công");
                     toast.success("Xử lí thành công");
                 } else {
                     toast.error("Có lỗi xảy ra khi xử lí dữ liệu");

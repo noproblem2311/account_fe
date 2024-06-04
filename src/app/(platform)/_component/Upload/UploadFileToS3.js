@@ -26,7 +26,6 @@ export const PutObjectToS3 = async (fileList) => {
 
       try {
         const response = await client.send(command);
-        console.log(response);
       } catch (err) {
         console.error(err);
       }

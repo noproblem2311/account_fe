@@ -5,10 +5,10 @@ import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
 // Create S3 client with the specified region and credentials
 const client =  new S3Client({
-  region: process.env.AWS_BUCKET_REGION || "ap-southeast-1",
+  region: process.env.AWS_BUCKET_REGION ,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY || "AKIAZI2LGBQC7DW7X2SP",
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "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",
+    accessKeyId: process.env.AWS_ACCESS_KEY ,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ,
   },
 })
 

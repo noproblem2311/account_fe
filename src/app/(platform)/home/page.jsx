@@ -182,7 +182,7 @@ const Home = () => {
         if (status) {
             try {
                 const after_clear = clear_list_file_after_check(list_file_after_check);
-                const res = await axios.post('http://13.214.156.123/main_process/', after_clear);
+                const res = await axios.post('https://bft0ep8tq2.execute-api.ap-southeast-1.amazonaws.com/dev/', after_clear);
                 if (res.status === 200) {
                     toast.success("Xử lí thành công");
                 } else {

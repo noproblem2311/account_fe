@@ -14,7 +14,7 @@ const History = () => {
   const fetchDatasource = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('https://bft0ep8tq2.execute-api.ap-southeast-1.amazonaws.com/dev/');
+      const response = await axios.get('http://13.214.156.123/history-by-user/3537f1c1-8aa9-4a66-90de-6a59ea16bc75/');
       const data = response.data;
       setDatasource(data);
     } catch (error) {

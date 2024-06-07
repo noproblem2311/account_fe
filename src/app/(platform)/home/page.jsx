@@ -210,7 +210,7 @@ const Home = () => {
             </div>
             <div className="flex flex-row gap-x-[19px]">
                 {/* file */}
-                <div className="flex flex-col gap-y-[15px] w-3/4">
+                <div className={`flex flex-col gap-y-[15px] ${fileList.length > 0 ? 'w-3/4' : 'w-full'}`}>   
                     <h3 className="font-bold leading-8 text-[23px]">Nhập tài liệu</h3>
                     <div className="flex flex-col min-h-[875px] bg-white px-4 py-5">
                         <div>
@@ -246,6 +246,7 @@ const Home = () => {
                     </div>
                 </div>
                 {/* status */}
+                {fileList.length > 0 && (
                 <div className="w-1/4 flex flex-col gap-y-[10px] mt-[47px]">
                     <div className={`border-[1px] rounded-md flex flex-col gap-y-2 p-[10px] ${isAllChecked('process_1') ? 'bg-checked' : ''}`}>
                         <div className="div">1.Đối chiếu số dư tổng hợp trên bảng CDPS</div>
@@ -315,6 +316,7 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
+                )}
             </div>
         </div>
     );

@@ -73,7 +73,7 @@ const TableHistory = ({ datas = [] }) => {
   return (
     <>
       <Table columns={columns(handleViewDetails)} dataSource={datatable} />
-      
+
       <DetailPopupdata data={detailData} isShow={showDetail} onClose={handleCloseDetails} />
     </>
   );
